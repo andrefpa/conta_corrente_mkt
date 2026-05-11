@@ -5,308 +5,440 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Conta Corrente de Marketing | Cabana Burger</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Serif+Display:wght@400&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b1220;
-    --panel:#121a2b;
-    --panel-2:#182338;
-    --border:#26324d;
-    --accent:#ff7a2f;
-    --accent-2:#ffa85e;
-    --accent-soft:rgba(255,122,47,.12);
-    --green:#22c55e;
-    --green-soft:rgba(34,197,94,.14);
-    --red:#ef4444;
-    --red-soft:rgba(239,68,68,.14);
-    --text:#e8ecf6;
-    --text-muted:#94a3b8;
-    --text-dim:#64748b;
-    --shadow:0 10px 35px rgba(0,0,0,.35);
+    /* === IDENTIDADE CABANA === */
+    --cabana-green:#0A6B2C;
+    --cabana-green-dark:#074d20;
+    --cabana-cream:#F6F0E1;
+    --cabana-cream-2:#EFE7D2;
+    --cabana-orange:#FF5028;
+    --cabana-orange-dark:#E03E18;
+    --cabana-green-digital:#A8E067;
+    --cabana-black:#0A0A0A;
+
+    /* alias semânticos */
+    --bg:var(--cabana-cream);
+    --panel:#FFFCF3;
+    --panel-2:var(--cabana-cream-2);
+    --border:rgba(10,107,44,0.20);
+    --border-strong:rgba(10,107,44,0.45);
+    --accent:var(--cabana-orange);
+    --accent-soft:rgba(255,80,40,.10);
+    --green:var(--cabana-green);
+    --green-soft:rgba(10,107,44,.10);
+    --green-bright:#0e8a3a;
+    --red:#C02020;
+    --red-soft:rgba(192,32,32,.10);
+    --text:var(--cabana-black);
+    --text-muted:rgba(10,107,44,.65);
+    --text-dim:rgba(10,10,10,.45);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
     font-family:'Inter','Segoe UI',Arial,sans-serif;
-    background:linear-gradient(180deg,#0a1020 0%, #0b1220 100%);
+    background:var(--cabana-cream);
     color:var(--text);
     min-height:100vh;
+    -webkit-font-smoothing:antialiased;
   }
+
+  /* ============== TOPBAR (verde institucional) ============== */
   header.topbar{
     position:sticky;top:0;z-index:50;
-    background:rgba(11,18,32,.85);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
-    padding:14px 28px;
+    background:var(--cabana-green);
+    border-bottom:none;
+    padding:14px 32px;
     display:flex;align-items:center;justify-content:space-between;
+    color:var(--cabana-cream);
   }
-  .brand{display:flex;align-items:center;gap:14px;}
-  .logo{
-    width:42px;height:42px;border-radius:10px;
-    background:linear-gradient(135deg,var(--accent) 0%,#d64a00 100%);
-    display:grid;place-items:center;font-weight:800;color:#fff;font-size:18px;
-    box-shadow:0 8px 22px rgba(255,122,47,.35);
+  .brand{display:flex;align-items:center;gap:18px;}
+  .brand .pill{
+    border:1.5px solid var(--cabana-cream);
+    padding:5px 16px;border-radius:999px;font-weight:900;
+    font-size:11px;letter-spacing:2px;text-transform:uppercase;
   }
-  .brand h1{font-size:17px;margin:0;letter-spacing:.3px;}
-  .brand .sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
-  .nav{display:flex;gap:6px;flex-wrap:wrap;}
+  .brand .wordmark{
+    font-family:'DM Serif Display','Cooper Black','Recoleta',Georgia,serif;
+    font-size:28px;letter-spacing:-1px;color:var(--cabana-cream);
+    line-height:1;
+  }
+  .brand .wordmark sup{font-size:.45em;font-weight:700;margin-left:1px;}
+  .brand .pretitle{
+    font-size:10px;text-transform:uppercase;letter-spacing:2.5px;
+    opacity:.85;font-weight:700;
+  }
+  .nav{display:flex;gap:4px;flex-wrap:wrap;}
   .nav button{
-    background:transparent;border:1px solid transparent;color:var(--text-muted);
-    padding:9px 14px;border-radius:8px;font-size:13px;cursor:pointer;
-    transition:all .18s ease;font-weight:500;
+    background:transparent;border:1.5px solid transparent;color:rgba(246,240,225,.7);
+    padding:8px 14px;border-radius:6px;font-size:12px;cursor:pointer;
+    transition:all .15s ease;font-weight:600;text-transform:uppercase;
+    letter-spacing:1px;font-family:inherit;
   }
-  .nav button:hover{color:var(--text);background:var(--panel-2);}
-  .nav button.active{background:var(--accent-soft);color:var(--accent);border-color:rgba(255,122,47,.3);}
-  main{padding:28px;max-width:1500px;margin:0 auto;}
+  .nav button:hover{color:var(--cabana-cream);}
+  .nav button.active{
+    background:var(--cabana-cream);color:var(--cabana-green);
+    border-color:var(--cabana-cream);font-weight:800;
+  }
+
+  main{padding:36px 32px;max-width:1500px;margin:0 auto;}
   section.view{display:none;animation:fadeIn .25s ease;}
   section.view.active{display:block;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  /* ============== TITLES ============== */
   .section-title{
-    display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;
+    display:flex;align-items:flex-end;justify-content:space-between;
+    margin-bottom:26px;padding-bottom:18px;
+    border-bottom:2px solid rgba(10,107,44,0.15);
   }
-  .section-title h2{margin:0;font-size:22px;font-weight:700;}
-  .section-title p{margin:0;font-size:13px;color:var(--text-muted);}
-  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;}
+  .section-title .label{
+    font-size:11px;text-transform:uppercase;letter-spacing:3px;
+    color:var(--cabana-green);opacity:.55;font-weight:700;margin-bottom:6px;
+  }
+  .section-title h2{
+    margin:0;font-size:34px;font-weight:900;color:var(--cabana-black);
+    letter-spacing:-1.2px;text-transform:uppercase;line-height:.95;
+    font-family:'Inter',sans-serif;
+  }
+  .section-title p{margin:6px 0 0 0;font-size:13px;color:var(--text-muted);font-weight:500;}
+
+  /* ============== KPIs ============== */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:28px;}
   .kpi{
-    background:var(--panel);border:1px solid var(--border);border-radius:14px;
-    padding:18px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+    background:var(--panel);border:2px solid rgba(10,107,44,0.15);border-radius:14px;
+    padding:20px 22px;position:relative;
   }
-  .kpi::after{
-    content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;
-    background:radial-gradient(circle,var(--accent-soft) 0%,transparent 70%);
-    border-radius:50%;
+  .kpi .label{
+    color:var(--cabana-green);font-size:11px;text-transform:uppercase;
+    letter-spacing:2px;font-weight:800;opacity:.7;
   }
-  .kpi .label{color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:.8px;font-weight:600;}
-  .kpi .value{font-size:26px;font-weight:700;margin-top:8px;letter-spacing:-.5px;}
-  .kpi.positive .value{color:var(--green);}
-  .kpi.negative .value{color:var(--red);}
-  .kpi .delta{font-size:12px;color:var(--text-muted);margin-top:4px;}
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .kpi .value{
+    font-size:26px;font-weight:900;margin-top:10px;letter-spacing:-1px;
+    color:var(--cabana-black);font-family:'Inter',sans-serif;
+  }
+  .kpi.positive .value{color:var(--cabana-green);}
+  .kpi.negative .value{color:var(--cabana-orange);}
+  .kpi .delta{font-size:11px;color:var(--text-muted);margin-top:6px;font-weight:500;}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
   @media (max-width:900px){.grid-2{grid-template-columns:1fr;}}
+
+  /* ============== PANELS ============== */
   .panel{
-    background:var(--panel);border:1px solid var(--border);
-    border-radius:14px;padding:20px;box-shadow:var(--shadow);margin-bottom:20px;
+    background:var(--panel);border:2px solid rgba(10,107,44,0.15);
+    border-radius:14px;padding:24px;margin-bottom:18px;
   }
-  .panel h3{margin:0 0 6px 0;font-size:15px;font-weight:700;}
-  .panel p.hint{margin:0 0 16px 0;color:var(--text-muted);font-size:12px;}
-  table{
-    width:100%;border-collapse:separate;border-spacing:0;font-size:13px;
+  .panel h3{
+    margin:0 0 4px 0;font-size:17px;font-weight:900;color:var(--cabana-black);
+    letter-spacing:-.3px;text-transform:uppercase;
   }
+  .panel p.hint{margin:0 0 18px 0;color:var(--text-muted);font-size:12px;font-weight:500;}
+
+  /* ============== TABLES ============== */
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;}
   thead th{
     position:sticky;top:0;
-    background:var(--panel-2);color:var(--text-muted);
-    font-size:11px;text-transform:uppercase;letter-spacing:.7px;font-weight:600;
-    text-align:left;padding:12px 14px;border-bottom:1px solid var(--border);
+    background:var(--cabana-green);color:var(--cabana-cream);
+    font-size:10px;text-transform:uppercase;letter-spacing:2px;font-weight:900;
+    text-align:left;padding:12px 14px;border-bottom:2px solid var(--cabana-green-dark);
   }
-  tbody td{padding:11px 14px;border-bottom:1px solid rgba(38,50,77,.55);}
-  tbody tr:hover{background:var(--panel-2);}
+  thead th.num{text-align:right;}
+  tbody td{
+    padding:11px 14px;border-bottom:1px solid rgba(10,107,44,.12);
+    color:var(--cabana-black);
+  }
+  tbody tr:hover{background:rgba(10,107,44,.04);}
   .num{font-variant-numeric:tabular-nums;text-align:right;}
-  .pos{color:var(--green);font-weight:600;}
-  .neg{color:var(--red);font-weight:600;}
+  .pos{color:var(--cabana-green);font-weight:700;}
+  .neg{color:var(--cabana-orange);font-weight:700;}
   .muted{color:var(--text-muted);}
+
+  /* ============== CHIPS ============== */
   .chip{
-    display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600;
-    background:var(--panel-2);color:var(--text-muted);border:1px solid var(--border);
+    display:inline-block;padding:4px 12px;border-radius:999px;
+    font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;
+    background:var(--cabana-cream-2);color:var(--cabana-green);
+    border:1.5px solid rgba(10,107,44,.2);
   }
-  .chip.orange{background:var(--accent-soft);color:var(--accent);border-color:rgba(255,122,47,.3);}
-  .chip.green{background:var(--green-soft);color:var(--green);border-color:rgba(34,197,94,.3);}
-  .chip.red{background:var(--red-soft);color:var(--red);border-color:rgba(239,68,68,.3);}
+  .chip.orange{background:var(--cabana-orange);color:var(--cabana-cream);border-color:var(--cabana-orange);}
+  .chip.green{background:var(--cabana-green);color:var(--cabana-cream);border-color:var(--cabana-green);}
+  .chip.red{background:var(--cabana-orange);color:var(--cabana-cream);border-color:var(--cabana-orange);}
+
+  /* ============== INPUTS ============== */
   input[type="number"], input[type="text"], select{
-    background:var(--panel-2);border:1px solid var(--border);color:var(--text);
-    padding:9px 12px;border-radius:8px;font-size:13px;font-family:inherit;width:100%;
+    background:var(--cabana-cream);border:1.5px solid rgba(10,107,44,.25);color:var(--cabana-black);
+    padding:9px 12px;border-radius:8px;font-size:13px;font-family:inherit;width:100%;font-weight:500;
   }
   input[type="number"]:focus, input[type="text"]:focus, select:focus{
-    outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,122,47,.15);
+    outline:none;border-color:var(--cabana-green);box-shadow:0 0 0 3px rgba(10,107,44,.15);
   }
-  label.field{display:block;margin-bottom:14px;}
-  label.field .lbl{display:block;color:var(--text-muted);font-size:12px;margin-bottom:6px;font-weight:500;}
   .param-row{
     display:grid;grid-template-columns:1fr 130px 2fr;gap:14px;align-items:center;
-    padding:12px 0;border-bottom:1px solid var(--border);
+    padding:14px 0;border-bottom:1px solid rgba(10,107,44,.12);
   }
   .param-row:last-child{border:none;}
-  .param-row .name{font-weight:600;}
+  .param-row .name{font-weight:800;color:var(--cabana-green);text-transform:uppercase;letter-spacing:1px;font-size:13px;}
   .param-row .desc{color:var(--text-muted);font-size:12px;}
-  .scroll{max-height:520px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;}
+
+  .scroll{max-height:520px;overflow-y:auto;border:1.5px solid rgba(10,107,44,.15);border-radius:10px;background:var(--cabana-cream);}
   .scroll::-webkit-scrollbar{width:8px;height:8px;}
   .scroll::-webkit-scrollbar-track{background:transparent;}
-  .scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+  .scroll::-webkit-scrollbar-thumb{background:rgba(10,107,44,.25);border-radius:4px;}
   .chart-wrap{position:relative;height:340px;}
   .chart-wrap.tall{height:460px;}
+
+  /* ============== MONTH HEADER & EXTRATO ROWS ============== */
   .month-header{
-    background:linear-gradient(90deg,var(--accent-soft) 0%,transparent 80%);
-    border-left:3px solid var(--accent);
-    padding:10px 14px;font-weight:700;margin-top:6px;
+    background:var(--cabana-green);color:var(--cabana-cream);
+    padding:12px 16px;font-weight:900;margin-top:6px;
     display:flex;justify-content:space-between;align-items:center;
+    text-transform:uppercase;letter-spacing:2px;font-size:13px;
+    border-radius:6px;
   }
   .month-header .pill{
-    background:var(--panel-2);font-size:12px;padding:3px 10px;border-radius:999px;font-weight:500;
-    color:var(--text-muted);
+    background:transparent;font-size:11px;padding:4px 12px;
+    border-radius:999px;font-weight:700;color:var(--cabana-cream);
+    border:1.5px solid rgba(246,240,225,.5);
+    letter-spacing:1px;text-transform:none;
   }
-  .row-open{background:rgba(59,130,246,.08);border-left:3px solid #3b82f6;}
-  .row-close{background:var(--accent-soft);border-left:3px solid var(--accent);font-weight:600;}
-  .row-rev{background:rgba(34,197,94,.06);border-left:3px solid var(--green);}
+  .row-open{background:var(--cabana-green-digital);background:rgba(168,224,103,.25);border-left:4px solid var(--cabana-green);}
+  .row-close{background:var(--cabana-orange);color:var(--cabana-cream);}
+  .row-close td{color:var(--cabana-cream);}
+  .row-close .pos{color:var(--cabana-cream);}
+  .row-close .neg{color:var(--cabana-cream);}
+  .row-close .muted{color:rgba(246,240,225,.7);}
+  .row-rev{background:rgba(168,224,103,.18);border-left:4px solid var(--cabana-green);}
+
   .toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
   .toolbar > *{flex:1;min-width:180px;}
+
   .btn{
-    background:var(--accent);color:#fff;border:none;padding:10px 18px;border-radius:8px;
-    font-weight:600;cursor:pointer;font-size:13px;transition:all .15s;
+    background:var(--cabana-orange);color:var(--cabana-cream);border:none;
+    padding:11px 22px;border-radius:8px;font-weight:900;cursor:pointer;
+    font-size:12px;transition:all .15s;text-transform:uppercase;letter-spacing:1.5px;
+    font-family:inherit;
   }
-  .btn:hover{background:#ff8b45;}
-  .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--text);}
-  .btn.ghost:hover{background:var(--panel-2);}
-  .legend-dots{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;}
-  .legend-dots span{font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:6px;}
-  .legend-dots .dot{width:10px;height:10px;border-radius:50%;}
-  .summary-badge{
-    display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:999px;font-size:11px;
+  .btn:hover{background:var(--cabana-orange-dark);}
+  .btn.ghost{
+    background:transparent;border:2px solid var(--cabana-green);color:var(--cabana-green);
   }
-  footer{padding:20px;text-align:center;color:var(--text-dim);font-size:11px;border-top:1px solid var(--border);margin-top:40px;}
-  .hide-scrollbar::-webkit-scrollbar{display:none;}
-  /* === Login overlay === */
+  .btn.ghost:hover{background:var(--cabana-green);color:var(--cabana-cream);}
+
+  footer{
+    background:var(--cabana-orange);color:var(--cabana-cream);
+    text-align:center;padding:42px 32px;margin-top:48px;
+  }
+  footer .wordmark-foot{
+    font-family:'DM Serif Display','Cooper Black','Recoleta',Georgia,serif;
+    font-size:42px;letter-spacing:-2px;margin-bottom:10px;line-height:1;
+  }
+  footer .wordmark-foot sup{font-size:.45em;}
+  footer .tagline{
+    font-size:11px;text-transform:uppercase;letter-spacing:4px;
+    opacity:.92;font-weight:700;
+  }
+
+  /* ============== LOGIN OVERLAY ============== */
   #login-overlay{
     position:fixed;inset:0;z-index:9999;
-    background:radial-gradient(ellipse at top, #0b1220 0%, #050a14 100%);
+    background:var(--cabana-green);
     display:flex;align-items:center;justify-content:center;
-    backdrop-filter:blur(8px);
   }
   #login-overlay::before{
     content:"";position:absolute;inset:0;
     background-image:
-      radial-gradient(circle at 20% 30%, rgba(255,122,47,.10) 0%, transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(59,130,246,.08) 0%, transparent 40%);
+      radial-gradient(circle at 15% 25%, rgba(168,224,103,.15) 0%, transparent 50%),
+      radial-gradient(circle at 85% 75%, rgba(255,80,40,.18) 0%, transparent 50%);
     pointer-events:none;
+  }
+  .login-wordmark-bg{
+    position:absolute;top:30px;left:40px;
+    font-family:'DM Serif Display','Cooper Black','Recoleta',Georgia,serif;
+    font-size:34px;color:var(--cabana-cream);letter-spacing:-1.5px;
+    line-height:1;
+  }
+  .login-wordmark-bg sup{font-size:.45em;}
+  .login-burgers-pill{
+    position:absolute;top:42px;right:40px;
+    border:1.5px solid var(--cabana-cream);color:var(--cabana-cream);
+    padding:6px 18px;border-radius:999px;
+    font-size:11px;letter-spacing:2px;font-weight:900;text-transform:uppercase;
   }
   .login-card{
     position:relative;z-index:1;
-    background:var(--panel);border:1px solid var(--border);border-radius:18px;
-    padding:42px 38px 34px 38px;
-    width:min(420px,92vw);
-    box-shadow:0 30px 90px rgba(0,0,0,.6), 0 8px 28px rgba(255,122,47,.15);
+    background:var(--cabana-cream);border:none;border-radius:18px;
+    padding:48px 44px 38px 44px;
+    width:min(440px,92vw);
     text-align:center;
     animation:loginIn .4s cubic-bezier(.2,.9,.3,1.2);
   }
   @keyframes loginIn{from{opacity:0;transform:translateY(20px) scale(.96);}to{opacity:1;transform:none;}}
-  .login-logo{
-    width:64px;height:64px;border-radius:16px;
-    background:linear-gradient(135deg,var(--accent) 0%,#d64a00 100%);
-    display:grid;place-items:center;color:#fff;font-weight:800;font-size:22px;
-    margin:0 auto 18px;
-    box-shadow:0 14px 36px rgba(255,122,47,.45);
+  .login-wordmark{
+    font-family:'DM Serif Display','Cooper Black','Recoleta',Georgia,serif;
+    font-size:54px;color:var(--cabana-green);letter-spacing:-2px;
+    line-height:1;margin-bottom:6px;
   }
-  .login-card h2{margin:0 0 6px 0;font-size:20px;font-weight:700;letter-spacing:.2px;}
-  .login-card p.lead{margin:0 0 26px 0;color:var(--text-muted);font-size:13px;}
+  .login-wordmark sup{font-size:.4em;}
+  .login-tag{
+    display:inline-block;border:1.5px solid var(--cabana-green);color:var(--cabana-green);
+    padding:5px 16px;border-radius:999px;font-size:10px;font-weight:900;
+    letter-spacing:2px;text-transform:uppercase;margin-bottom:24px;
+  }
+  .login-card h2{
+    margin:0 0 6px 0;font-size:18px;font-weight:900;color:var(--cabana-black);
+    text-transform:uppercase;letter-spacing:-.3px;
+  }
+  .login-card p.lead{margin:0 0 28px 0;color:var(--text-muted);font-size:12px;font-weight:500;}
   .login-field{position:relative;text-align:left;margin-bottom:14px;}
   .login-field label{
-    display:block;font-size:11px;color:var(--text-muted);text-transform:uppercase;
-    letter-spacing:.8px;font-weight:600;margin-bottom:7px;
+    display:block;font-size:10px;color:var(--cabana-green);text-transform:uppercase;
+    letter-spacing:2px;font-weight:900;margin-bottom:8px;
   }
   .login-field input{
-    width:100%;background:var(--panel-2);border:1px solid var(--border);color:var(--text);
-    padding:13px 44px 13px 14px;border-radius:10px;font-size:15px;font-family:inherit;
-    letter-spacing:.5px;
+    width:100%;background:#FFFCF3;border:2px solid rgba(10,107,44,.25);color:var(--cabana-black);
+    padding:14px 44px 14px 16px;border-radius:10px;font-size:15px;font-family:inherit;
+    letter-spacing:.5px;font-weight:600;
   }
-  .login-field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,122,47,.18);}
+  .login-field input:focus{outline:none;border-color:var(--cabana-green);box-shadow:0 0 0 4px rgba(10,107,44,.12);}
   .login-toggle{
-    position:absolute;right:10px;top:32px;background:none;border:none;color:var(--text-muted);
-    cursor:pointer;padding:8px;border-radius:6px;font-size:12px;
+    position:absolute;right:10px;top:33px;background:none;border:none;color:var(--cabana-green);
+    cursor:pointer;padding:8px;border-radius:6px;font-size:14px;opacity:.6;
   }
-  .login-toggle:hover{color:var(--accent);background:rgba(255,122,47,.08);}
+  .login-toggle:hover{opacity:1;background:rgba(10,107,44,.08);}
   #login-btn{
-    width:100%;background:var(--accent);color:#fff;border:none;padding:13px;border-radius:10px;
-    font-weight:700;cursor:pointer;font-size:14px;letter-spacing:.4px;margin-top:6px;
-    transition:all .15s;
+    width:100%;background:var(--cabana-orange);color:var(--cabana-cream);border:none;
+    padding:14px;border-radius:10px;font-weight:900;cursor:pointer;font-size:13px;
+    letter-spacing:2px;text-transform:uppercase;margin-top:8px;transition:all .15s;
+    font-family:inherit;
   }
-  #login-btn:hover{background:#ff8b45;transform:translateY(-1px);box-shadow:0 8px 20px rgba(255,122,47,.4);}
-  #login-btn:active{transform:translateY(0);}
+  #login-btn:hover{background:var(--cabana-orange-dark);}
   #login-error{
-    color:var(--red);font-size:12px;margin-top:10px;min-height:18px;
-    background:var(--red-soft);padding:6px 10px;border-radius:8px;
-    border:1px solid rgba(239,68,68,.2);display:none;
+    color:var(--cabana-orange);font-size:11px;margin-top:10px;min-height:18px;
+    background:rgba(255,80,40,.10);padding:8px 12px;border-radius:8px;
+    border:1.5px solid rgba(255,80,40,.25);display:none;font-weight:700;
+    text-transform:uppercase;letter-spacing:1px;
   }
   #login-error.show{display:block;animation:shake .35s;}
   @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
-  .login-foot{margin-top:18px;font-size:11px;color:var(--text-dim);}
+  .login-foot{
+    margin-top:22px;font-size:10px;color:var(--cabana-green);opacity:.55;
+    text-transform:uppercase;letter-spacing:2px;font-weight:700;
+  }
   body.locked{overflow:hidden;}
-  .month-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+
+  /* ============== MONTH TABS (chips) ============== */
+  .month-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;}
   .month-tabs button{
-    background:var(--panel);border:1px solid var(--border);color:var(--text-muted);
-    padding:8px 16px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;
-    transition:all .15s;font-family:inherit;letter-spacing:.3px;
+    background:transparent;border:2px solid rgba(10,107,44,.2);color:var(--cabana-green);
+    padding:8px 16px;border-radius:8px;font-size:11px;font-weight:900;cursor:pointer;
+    transition:all .15s;font-family:inherit;letter-spacing:1.5px;text-transform:uppercase;
   }
-  .month-tabs button:hover{color:var(--text);border-color:var(--accent);}
-  .month-tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent);
-    box-shadow:0 6px 18px rgba(255,122,47,.35);}
+  .month-tabs button:hover{border-color:var(--cabana-green);background:rgba(10,107,44,.06);}
+  .month-tabs button.active{background:var(--cabana-green);color:var(--cabana-cream);border-color:var(--cabana-green);}
+
+  /* ============== CALC CARDS (3 col) ============== */
   .calc-card{
-    background:var(--panel-2);border:1px solid var(--border);border-radius:12px;
-    padding:18px;margin-bottom:14px;
+    background:var(--cabana-cream-2);border:2px solid rgba(10,107,44,.15);border-radius:12px;
+    padding:20px;margin-bottom:14px;
   }
-  .calc-card .cat-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:10px;
-    display:flex;align-items:center;gap:10px;}
-  .calc-card .cat-name .tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;
-    background:var(--accent-soft);color:var(--accent);border:1px solid rgba(255,122,47,.3);}
+  .calc-card .cat-name{
+    font-size:13px;font-weight:900;color:var(--cabana-green);margin-bottom:14px;
+    display:flex;align-items:center;gap:10px;text-transform:uppercase;letter-spacing:1.5px;
+  }
+  .calc-card .cat-name .tag{
+    font-size:10px;font-weight:900;padding:3px 10px;border-radius:999px;
+    background:var(--cabana-orange);color:var(--cabana-cream);
+    letter-spacing:1px;
+  }
   .calc-formula{
-    display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:15px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:14px;
     font-variant-numeric:tabular-nums;
   }
-  .calc-formula .value{font-weight:700;color:var(--text);}
+  .calc-formula .value{font-weight:800;color:var(--cabana-black);}
   .calc-formula .op{color:var(--text-muted);font-weight:500;}
-  .calc-formula .rate{color:var(--accent);font-weight:700;}
-  .calc-formula .result{color:var(--green);font-weight:700;font-size:17px;
-    padding:4px 12px;background:var(--green-soft);border-radius:8px;border:1px solid rgba(34,197,94,.3);}
-  .month-summary{
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px;
+  .calc-formula .rate{color:var(--cabana-orange);font-weight:900;}
+  .calc-formula .result{
+    color:var(--cabana-cream);font-weight:900;font-size:18px;
+    padding:8px 16px;background:var(--cabana-green);border-radius:8px;
   }
-  .ms-card{
-    background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;
-    box-shadow:var(--shadow);
-  }
-  .ms-card .lbl{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600;}
-  .ms-card .val{font-size:20px;font-weight:700;margin-top:6px;letter-spacing:-.3px;}
-  .ms-card.pos .val{color:var(--green);}
-  .ms-card.neg .val{color:var(--red);}
-  .ms-card.blue .val{color:#60a5fa;}
-  .ms-card.orange .val{color:var(--accent);}
-  .grid-3{display:grid;grid-template-columns:1.1fr 1fr 1.3fr;gap:20px;}
-  @media (max-width:1200px){.grid-3{grid-template-columns:1fr;}}
   .calc-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
   @media (max-width:900px){.calc-3col{grid-template-columns:1fr;}}
   .calc-3col .calc-card{margin-bottom:0;height:100%;}
   .calc-3col .calc-formula{flex-direction:column;align-items:flex-start;gap:6px;}
   .calc-3col .calc-formula .line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;}
-  .calc-3col .calc-formula .result{font-size:20px;margin-top:6px;width:100%;text-align:center;}
+  .calc-3col .calc-formula .result{font-size:22px;margin-top:8px;width:100%;text-align:center;letter-spacing:-.5px;}
+
+  /* ============== EQ BAR (Total do Mês) ============== */
   .eq-bar{
-    background:linear-gradient(135deg, var(--panel) 0%, var(--panel-2) 100%);
-    border:1px solid var(--border);border-radius:14px;padding:20px 18px;margin-bottom:20px;
-    box-shadow:var(--shadow);
+    background:var(--cabana-cream-2);border:2px solid rgba(10,107,44,.15);
+    border-radius:14px;padding:22px 20px;margin-bottom:20px;
   }
-  .eq-bar h3{margin:0 0 14px 0;font-size:13px;color:var(--text-muted);
-    text-transform:uppercase;letter-spacing:.8px;font-weight:600;}
+  .eq-bar h3{
+    margin:0 0 16px 0;font-size:12px;color:var(--cabana-green);
+    text-transform:uppercase;letter-spacing:2px;font-weight:900;
+  }
   .eq-flow{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;}
   .eq-cell{
-    flex:1;min-width:130px;background:var(--panel-2);border:1px solid var(--border);
-    border-radius:10px;padding:12px 14px;text-align:center;
+    flex:1;min-width:130px;background:var(--cabana-cream);border:2px solid rgba(10,107,44,.15);
+    border-radius:10px;padding:14px;text-align:center;
   }
-  .eq-cell .eq-lbl{font-size:10px;color:var(--text-muted);text-transform:uppercase;
-    letter-spacing:.7px;font-weight:600;margin-bottom:6px;white-space:nowrap;}
-  .eq-cell .eq-val{font-size:18px;font-weight:700;letter-spacing:-.3px;font-variant-numeric:tabular-nums;}
-  .eq-cell.pos .eq-val{color:var(--green);}
-  .eq-cell.neg .eq-val{color:var(--red);}
-  .eq-cell.blue .eq-val{color:#60a5fa;}
-  .eq-cell.orange{background:var(--accent-soft);border-color:rgba(255,122,47,.4);}
-  .eq-cell.orange .eq-val{color:var(--accent);}
+  .eq-cell .eq-lbl{
+    font-size:9px;color:var(--cabana-green);text-transform:uppercase;
+    letter-spacing:1.5px;font-weight:900;margin-bottom:8px;white-space:nowrap;
+  }
+  .eq-cell .eq-val{
+    font-size:19px;font-weight:900;letter-spacing:-.5px;font-variant-numeric:tabular-nums;
+    color:var(--cabana-black);
+  }
+  .eq-cell.pos .eq-val{color:var(--cabana-green);}
+  .eq-cell.neg .eq-val{color:var(--cabana-orange);}
+  .eq-cell.blue{background:rgba(168,224,103,.30);}
+  .eq-cell.blue .eq-val{color:var(--cabana-green-dark);}
+  .eq-cell.orange{background:var(--cabana-orange);border-color:var(--cabana-orange);}
+  .eq-cell.orange .eq-lbl{color:var(--cabana-cream);}
+  .eq-cell.orange .eq-val{color:var(--cabana-cream);}
   .eq-cell.highlight{
-    background:linear-gradient(135deg, rgba(255,122,47,.18), rgba(255,168,94,.08));
-    border:2px solid var(--accent);
+    background:var(--cabana-green);border-color:var(--cabana-green);
   }
-  .eq-cell.highlight .eq-lbl{color:var(--accent);}
-  .eq-cell.highlight .eq-val{color:var(--accent);font-size:20px;}
+  .eq-cell.highlight .eq-lbl{color:var(--cabana-cream);}
+  .eq-cell.highlight .eq-val{color:var(--cabana-cream);font-size:22px;}
   .eq-op{
     display:flex;align-items:center;justify-content:center;min-width:28px;
-    font-size:22px;color:var(--text-muted);font-weight:700;
+    font-size:24px;color:var(--cabana-green);font-weight:900;
   }
   .eq-sep{
     display:flex;align-items:center;justify-content:center;min-width:16px;
-    font-size:28px;color:var(--border);font-weight:300;
+    font-size:30px;color:rgba(10,107,44,.25);font-weight:300;
+  }
+
+  /* ============== HERO/BADGE no Dashboard ============== */
+  .hero-strip{
+    background:var(--cabana-green);color:var(--cabana-cream);
+    padding:34px 32px;border-radius:14px;margin-bottom:24px;
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:20px;
+  }
+  .hero-strip .hero-title{
+    font-family:'Inter',sans-serif;font-weight:900;font-size:36px;
+    text-transform:uppercase;letter-spacing:-1.5px;line-height:.95;margin:0;
+  }
+  .hero-strip .hero-sub{
+    font-size:11px;text-transform:uppercase;letter-spacing:3px;
+    opacity:.8;margin-top:8px;font-weight:700;
+  }
+  .hero-strip .hero-meta{
+    text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:2px;
+    opacity:.75;font-weight:700;
+  }
+  .hero-strip .hero-meta strong{
+    display:block;font-size:24px;color:var(--cabana-cream);
+    font-family:'DM Serif Display',Georgia,serif;letter-spacing:-1px;
+    margin-top:6px;opacity:1;
   }
 </style>
 
@@ -322,8 +454,11 @@
 
 <!-- Login Overlay -->
 <div id="login-overlay">
+  <div class="login-wordmark-bg">Cabana<sup>®</sup></div>
+  <div class="login-burgers-pill">Burgers Reais</div>
   <div class="login-card">
-    <div class="login-logo">CC</div>
+    <div class="login-wordmark">Cabana<sup>®</sup></div>
+    <div class="login-tag">Marketing · 2026</div>
     <h2>Conta Corrente de Marketing</h2>
     <p class="lead">Acesso restrito · informe a senha para continuar</p>
     <div class="login-field">
@@ -333,17 +468,17 @@
     </div>
     <button id="login-btn" type="button">Entrar</button>
     <div id="login-error">Senha incorreta. Tente novamente.</div>
-    <div class="login-foot">Cabana Burger · Marketing</div>
+    <div class="login-foot">SP → RJ · Burgers Reais</div>
   </div>
 </div>
 
 <header class="topbar">
   <div class="brand">
-    <div class="logo">CC</div>
     <div>
-      <h1>Conta Corrente de Marketing</h1>
-      <div class="sub">Gestão integrada de receita, despesa e saldo</div>
+      <div class="pretitle">Conta Corrente · Marketing</div>
+      <span class="wordmark">Cabana<sup>®</sup></span>
     </div>
+    <span class="pill">Burgers Reais</span>
   </div>
   <nav class="nav" id="nav">
     <button data-view="dash" class="active">Dashboard</button>
@@ -361,12 +496,23 @@
 
 <!-- DASHBOARD -->
 <section id="view-dash" class="view active">
+  <div class="hero-strip">
+    <div>
+      <div class="hero-sub">Conta Corrente · Marketing</div>
+      <h1 class="hero-title">Visão Geral<br>2026</h1>
+    </div>
+    <div class="hero-meta">
+      Ano Fiscal
+      <strong>2026</strong>
+    </div>
+  </div>
   <div class="section-title">
     <div>
-      <h2>Visão Geral 2026</h2>
-      <p>Resumo executivo da conta corrente de marketing</p>
+      <div class="label">01 · Resumo Executivo</div>
+      <h2>Indicadores</h2>
+      <p>Visão consolidada da conta corrente de marketing</p>
     </div>
-    <span class="chip orange">ano fiscal 2026</span>
+    <span class="chip orange">2026</span>
   </div>
 
   <div class="kpi-grid">
@@ -406,8 +552,9 @@
 <section id="view-months" class="view">
   <div class="section-title">
     <div>
-      <h2>Visão Mês a Mês</h2>
-      <p>Cálculo detalhado da receita, maiores gastos e extrato da conta corrente de cada mês</p>
+      <div class="label">02 · Mês a Mês</div>
+      <h2>Visão Mensal</h2>
+      <p>Cálculo da receita, maiores gastos e extrato da conta corrente do mês</p>
     </div>
     <span class="chip orange" id="month-current-chip">—</span>
   </div>
@@ -462,7 +609,11 @@
 <!-- PARAMS -->
 <section id="view-params" class="view">
   <div class="section-title">
-    <div><h2>Parâmetros</h2><p>Ajuste as alíquotas e o saldo inicial — todos os cálculos são recalculados em tempo real</p></div>
+    <div>
+      <div class="label">03 · Configuração</div>
+      <h2>Parâmetros</h2>
+      <p>Ajuste alíquotas e saldo inicial — todos os cálculos atualizam em tempo real</p>
+    </div>
   </div>
   <div class="panel">
     <h3>Alíquotas de Receita de Marketing</h3>
@@ -497,7 +648,11 @@
 <!-- REVENUE -->
 <section id="view-revenue" class="view">
   <div class="section-title">
-    <div><h2>Receita</h2><p>Receita bruta da marca e receita de marketing por mês</p></div>
+    <div>
+      <div class="label">04 · Receita</div>
+      <h2>Receita</h2>
+      <p>Receita bruta da marca e receita de marketing por mês</p>
+    </div>
   </div>
   <div class="panel">
     <h3>Receita Bruta Mensal (R$) — editável</h3>
@@ -524,7 +679,11 @@
 <!-- ACCOUNT -->
 <section id="view-account" class="view">
   <div class="section-title">
-    <div><h2>Conta Corrente</h2><p>Extrato estilo banco: saldo de abertura → receita → cada despesa descontada → saldo de fechamento (carry para o próximo mês)</p></div>
+    <div>
+      <div class="label">05 · Extrato</div>
+      <h2>Conta Corrente</h2>
+      <p>Saldo rolante: abertura → receita → despesas → fechamento (carry mensal)</p>
+    </div>
     <div class="toolbar" style="max-width:400px;">
       <select id="filter-month"><option value="">Todos os meses</option></select>
     </div>
@@ -545,7 +704,11 @@
 <!-- SUPPLIERS -->
 <section id="view-suppliers" class="view">
   <div class="section-title">
-    <div><h2>Maiores Gastos por Fornecedor</h2><p>Concentração de despesas na base lançada</p></div>
+    <div>
+      <div class="label">06 · Concentração</div>
+      <h2>Fornecedores</h2>
+      <p>Maiores gastos por fornecedor na base lançada</p>
+    </div>
     <div class="toolbar" style="max-width:400px;">
       <select id="sup-month"><option value="">Todos os meses</option></select>
     </div>
@@ -570,7 +733,11 @@
 <!-- WEEKLY -->
 <section id="view-weekly" class="view">
   <div class="section-title">
-    <div><h2>Distribuição Semanal</h2><p>Gasto total por semana do calendário</p></div>
+    <div>
+      <div class="label">07 · Tempo</div>
+      <h2>Distribuição Semanal</h2>
+      <p>Gasto total por semana do calendário</p>
+    </div>
   </div>
   <div class="panel">
     <div class="chart-wrap tall"><canvas id="chart-weekly"></canvas></div>
@@ -589,7 +756,11 @@
 <!-- LEDGER -->
 <section id="view-ledger" class="view">
   <div class="section-title">
-    <div><h2>Razão Contábil — Despesas</h2><p>Base completa de lançamentos. Use a busca para filtrar.</p></div>
+    <div>
+      <div class="label">08 · Base</div>
+      <h2>Razão Contábil</h2>
+      <p>Base completa de lançamentos · busca livre por fornecedor, filial e conta</p>
+    </div>
   </div>
   <div class="panel">
     <div class="toolbar">
@@ -611,7 +782,8 @@
 </main>
 
 <footer>
-  Plataforma Conta Corrente de Marketing · Cabana Burger · Ambiente interativo — dados base importados dos arquivos "Razão marketing" e "Receita conta corrente marketing".
+  <div class="wordmark-foot">Cabana<sup>®</sup></div>
+  <div class="tagline">Burgers Reais · Marketing · SP → RJ · 2026</div>
 </footer>
 
 <script>
@@ -752,6 +924,13 @@ function renderDashboard(){
   renderChartBalance(rows);
 }
 
+// === Paleta Cabana p/ Charts ===
+const CB_GREEN = '#0A6B2C';
+const CB_ORANGE = '#FF5028';
+const CB_GREEN_DIG = '#A8E067';
+const CB_BLACK = '#0A0A0A';
+const CB_CREAM = '#F6F0E1';
+
 function renderChartMonthly(rows){
   const ctx = document.getElementById('chart-monthly');
   if(charts.monthly) charts.monthly.destroy();
@@ -760,8 +939,8 @@ function renderChartMonthly(rows){
     data:{
       labels: MESES_LABEL,
       datasets:[
-        {label:'Entradas', data: rows.map(r=>r.entradas), backgroundColor:'rgba(34,197,94,.72)', borderRadius:6},
-        {label:'Saídas',   data: rows.map(r=>r.saidas),   backgroundColor:'rgba(239,68,68,.72)', borderRadius:6},
+        {label:'Entradas', data: rows.map(r=>r.entradas), backgroundColor:CB_GREEN, borderRadius:4},
+        {label:'Saídas',   data: rows.map(r=>r.saidas),   backgroundColor:CB_ORANGE, borderRadius:4},
       ]
     },
     options: chartDefaults({currency:true})
@@ -777,10 +956,13 @@ function renderChartBalance(rows){
       datasets:[{
         label:'Saldo Final',
         data: rows.map(r=>r.saldoFim),
-        borderColor:'#ff7a2f',
-        backgroundColor:'rgba(255,122,47,.18)',
-        fill:true, tension:.35, pointRadius:4, pointHoverRadius:6,
-        pointBackgroundColor:'#ff7a2f',
+        borderColor:CB_GREEN,
+        backgroundColor:'rgba(10,107,44,.12)',
+        fill:true, tension:.35, pointRadius:5, pointHoverRadius:7,
+        pointBackgroundColor:CB_ORANGE,
+        pointBorderColor:CB_CREAM,
+        pointBorderWidth:2,
+        borderWidth:3,
       }]
     },
     options: chartDefaults({currency:true})
@@ -791,17 +973,20 @@ function chartDefaults(opts={}){
   return {
     responsive:true, maintainAspectRatio:false,
     plugins:{
-      legend:{labels:{color:'#94a3b8',font:{size:12}}},
+      legend:{labels:{color:CB_GREEN,font:{size:12,weight:'700',family:'Inter'}}},
       tooltip:{
-        backgroundColor:'#0b1220',borderColor:'#26324d',borderWidth:1,
+        backgroundColor:CB_GREEN,titleColor:CB_CREAM,bodyColor:CB_CREAM,
+        borderColor:CB_GREEN,borderWidth:0,padding:12,
+        titleFont:{weight:'900',size:12},
+        bodyFont:{weight:'600',size:12,family:'Inter'},
         callbacks: opts.currency ? {
           label: (ctx)=>`${ctx.dataset.label}: ${brl(ctx.parsed.y ?? ctx.parsed.x,0)}`
         } : {}
       }
     },
     scales:{
-      x:{ticks:{color:'#94a3b8'},grid:{color:'rgba(38,50,77,.4)'}},
-      y:{ticks:{color:'#94a3b8', callback:v=>opts.currency?brl(v,0):v},grid:{color:'rgba(38,50,77,.4)'}},
+      x:{ticks:{color:CB_GREEN,font:{weight:'600',size:11}},grid:{color:'rgba(10,107,44,.10)'}},
+      y:{ticks:{color:CB_GREEN,font:{weight:'600',size:11},callback:v=>opts.currency?brl(v,0):v},grid:{color:'rgba(10,107,44,.10)'}},
     }
   };
 }
@@ -994,8 +1179,8 @@ function renderSuppliers(){
       datasets:[{
         label:'Gasto (R$)',
         data: top.map(r=>r.total),
-        backgroundColor:'rgba(255,122,47,.72)',
-        borderRadius:4
+        backgroundColor:CB_ORANGE,
+        borderRadius:3
       }]
     },
     options: {...chartDefaults({currency:true}), indexAxis:'y'}
@@ -1042,8 +1227,8 @@ function renderWeekly(){
       datasets:[{
         label:'Gasto Semanal (R$)',
         data: arr.map(r=>r.total),
-        backgroundColor:'rgba(59,130,246,.7)',
-        borderRadius:6
+        backgroundColor:CB_GREEN,
+        borderRadius:4
       }]
     },
     options: chartDefaults({currency:true})
@@ -1236,7 +1421,7 @@ function renderMonthView(){
         labels: top.map(r=>r.fornecedor.length>28 ? r.fornecedor.substring(0,28)+'…' : r.fornecedor),
         datasets:[{
           label:'Gasto (R$)', data: top.map(r=>r.total),
-          backgroundColor:'rgba(255,122,47,.72)', borderRadius:4,
+          backgroundColor:CB_ORANGE, borderRadius:3,
         }]
       },
       options: {...chartDefaults({currency:true}), indexAxis:'y'}
